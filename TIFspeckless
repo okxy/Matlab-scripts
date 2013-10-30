@@ -1,5 +1,4 @@
-
-fig = imread('Fig 7 131010  Scb is required for visual position memory 1000ppi83x67b'); % replace the filename with yours
+fig = imread('Fig.tif'); % replace the filename with yours
 size_ = size(fig) % without;, any new values will be printed out.
 rows=size_(1);
 cols=size_(2);
@@ -14,15 +13,11 @@ for row=2:rows-1
             fig(row,col) = fig(row,col-1); 
         elseif (fig(row-1,col)==fig(row,col-1) && fig(row-1,col)==fig(row,col+1))
             fig(row,col) = fig(row-1,col);
-%        elseif (fig(row-1,col-1)==fig(row+1,col+1)) 
- %           fig(row,col) = fig(row-1,col-1);
- %       elseif (fig(row+1,col-1)==fig(row-1,col+1))
-  %          fig(row,col) = fig(row-1,col);    
         end   
         % without; A statement in a script appears to produce a value that will display when the script runs. 
         % Although this is usually a problem in functions, it might be desirable
         % behavior in scripts (especially demos).
     end
 end
-imwrite(fig,'newFig2.tif'); % change the output file name to avoid overwriting your old one.
+imwrite(fig,'newFig.tif'); % change the output file name to avoid overwriting your old one.
 % use the script editor is essential for the format and grammar correction
