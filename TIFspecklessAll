@@ -1,0 +1,51 @@
+    
+% First Get a list of all files matching your criteria:
+% ( in this case pdb files in C:\My Documents\MATLAB )
+% Files=dir('*.*');
+
+%Then read in a file as follows:
+%( Here i can vary from 1 to the number of files )
+% TIFFiles = dir(fullfile('C:','Users','GC', 'Documents', 'MATLAB', '*.tif'));
+TIFFiles = dir( 'C:\Users\GC\Documents\MATLAB\Despeck\*.tif');
+for i=1:length(TIFFiles)
+%    data = load(matfiles(i).name)
+%Repeat this until you have read all your files.Then the code to read them
+%iteratively in Matlab is as follows:
+   % sizes=[10000,10000];
+   
+    tif = imread(TIFFiles(i).name); % replace the filename with yours
+    disp(TIFFiles(i).name)
+    sizetiff = size(tif) % without;, any new values will be printed out.Dn't use size, confused with size
+    rows=sizetiff(1);
+    cols=sizetiff(2);
+    for row=2:rows-1
+        for col = 2:cols-1
+            %find each stray pixel and assimilate it to its niche
+            if(tif(row+1,col)==tif(row-1,col) && tif(row+1,col)==tif(row,col+1))
+                tif(row,col)=tif(row+1,col);
+            elseif (tif(row+1,col)==tif(row,col-1) && tif(row+1,col)==tif(row,col+1))
+                tif(row,col)=tif(row+1,col);
+            elseif (tif(row,col-1)==tif(row-1,col) && tif(row,col-1)==tif(row+1,col))
+                tif(row,col) = tif(row,col-1); 
+            elseif (tif(row-1,col)==tif(row,col-1) && tif(row-1,col)==tif(row,col+1))
+                tif(row,col) = tif(row-1,col);
+                
+         %   elseif (tif(row-1,col-1)==tif(row+1,col+1)) 
+         %        tif(row,col) = tif(row-1,col-1);
+         %   elseif (tif(row+1,col-1)==tif(row-1,col+1))
+         %      tif(row,col) = tif(row-1,col);      
+                
+            end   
+            % without; A statement in a script appears to produce a value that will display when the script runs. 
+            % Although this is usually a problem in functions, it might be desirable
+            % behavior in scripts (especially demos).
+        end
+    end
+    newtif=strcat('C:\Users\GC\Documents\MATLAB\Despeck\new\',TIFFiles(i).name);% concatenate str\as folder, make sure it exist
+    imwrite(tif,newtif); % change the output file name to avoid overwriting your old one.
+    % use the script editor is essential for the format and grammar correction
+    %clear;
+
+end 
+
+
